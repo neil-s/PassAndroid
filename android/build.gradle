@@ -111,11 +111,6 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
 
-    androidTestCompile('com.android.support.test.espresso:espresso-web:2.2.2') {
-        // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
-        exclude group: 'javax.inject'
-    }
-
     androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
 
     androidTestCompile "org.mockito:mockito-core:$mockito_version"
