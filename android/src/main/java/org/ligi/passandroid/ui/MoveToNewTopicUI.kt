@@ -2,9 +2,8 @@ package org.ligi.passandroid.ui
 
 import android.app.Activity
 import android.support.v7.app.AlertDialog
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
+import kotlinx.android.synthetic.main.dialog_move_to_new_topic.*
 import org.ligi.passandroid.R
 import org.ligi.passandroid.functions.moveWithUndoSnackbar
 import org.ligi.passandroid.model.PassStore
@@ -26,8 +25,7 @@ internal class MoveToNewTopicUI(private val context: Activity, private val passS
             dialog.dismiss()
         }
 
-        val newTopicEditText = dialog.findViewById(R.id.new_topic_edit) as EditText
-        val suggestionButtonContainer= dialog.findViewById(R.id.topic_suggestions_button_container) as ViewGroup
+        val newTopicEditText = dialog.new_topic_edit
 
         // we need to do this here so the dialog does not get dismissed
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
@@ -47,7 +45,7 @@ internal class MoveToNewTopicUI(private val context: Activity, private val passS
             if (it != oldTopic) {
                 val button = Button(context)
                 button.text = it
-                suggestionButtonContainer.addView(button)
+                dialog.topic_suggestions_button_container.addView(button)
                 button.setOnClickListener { _ -> move(it) }
             }
         }

@@ -126,7 +126,7 @@ class PassEditActivity : AppCompatActivity() {
 
         val bitmap = currentPass.getBitmap(passStore, imageString)
 
-        val addButton = findViewById(add_logo)!!
+        val addButton : View = findViewById(add_logo)
         addButton.visibility = if (bitmap == null) View.VISIBLE else View.GONE
 
         val listener = View.OnClickListener {

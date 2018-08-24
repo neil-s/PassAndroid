@@ -38,7 +38,7 @@ class PassListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.pass_recycler, container, false)
 
-        passStoreProjection = PassStoreProjection(passStore, arguments.getString(BUNDLE_KEY_TOPIC)!!, settings.getSortOrder())
+        passStoreProjection = PassStoreProjection(passStore, arguments?.getString(BUNDLE_KEY_TOPIC)!!, settings.getSortOrder())
         adapter = PassAdapter(activity as AppCompatActivity, passStoreProjection)
 
         inflate.pass_recyclerview.adapter = adapter
@@ -47,8 +47,7 @@ class PassListFragment : Fragment() {
 
         val simpleItemTouchCallback = object : SimpleCallback(0, LEFT or RIGHT) {
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder)
-                    = false
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 this@PassListFragment.onSwiped(viewHolder.adapterPosition, swipeDir)
@@ -67,10 +66,12 @@ class PassListFragment : Fragment() {
         val pass = passStoreProjection.passList[pos]
         val nextTopic = passStore.classifier.getTopicWithOffset(pass, if (swipeDir == LEFT) -1 else 1)
 
-        if (nextTopic != null) {
-            moveWithUndoSnackbar(passStore.classifier, pass, nextTopic, activity)
-        } else {
-            MoveToNewTopicUI(activity, passStore, pass).show()
+        activity?.run {
+            if (nextTopic != null) {
+                moveWithUndoSnackbar(passStore.classifier, pass, nextTopic, this)
+            } else {
+                MoveToNewTopicUI(this, passStore, pass).show()
+            }
         }
     }
 
@@ -97,8 +98,9 @@ class PassListFragment : Fragment() {
         private val BUNDLE_KEY_TOPIC = "topic"
 
         fun newInstance(topic: String) = PassListFragment().apply {
-            arguments = Bundle()
-            arguments.putString(BUNDLE_KEY_TOPIC, topic)
+            arguments = Bundle().apply {
+                putString(BUNDLE_KEY_TOPIC, topic)
+            }
         }
     }
 

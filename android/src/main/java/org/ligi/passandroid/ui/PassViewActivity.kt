@@ -146,12 +146,13 @@ class PassViewActivity : PassViewActivityBase() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> {
-            val upIntent = NavUtils.getParentActivityIntent(this)
-            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities()
-                finish()
-            } else {
-                NavUtils.navigateUpTo(this, upIntent)
+            NavUtils.getParentActivityIntent(this)?.let { upIntent ->
+                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities()
+                    finish()
+                } else {
+                    NavUtils.navigateUpTo(this, upIntent)
+                }
             }
             true
         }

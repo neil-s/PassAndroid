@@ -26,7 +26,7 @@ class FieldsEditFragment : Fragment() {
         this.inflater = inflater
         val inflate = inflater.inflate(R.layout.edit_fields, container, false)
 
-        isEditingHiddenFields = arguments.getBoolean(ARGUMENT_KEY)
+        isEditingHiddenFields = arguments?.getBoolean(ARGUMENT_KEY) == true
 
         if (isEditingHiddenFields) {
             inflate.add_field.setText(R.string.add_back_fields)
