@@ -188,11 +188,6 @@ dependencies {
     withMapsCompile "com.google.android.gms:play-services-maps:$play_version"
 }
 
-spoon {
-    debug = true
-    grantAllPermissions = true
-}
-
 play {
     jsonFile = file('/media/ligi/USBCRED/play.json')
     uploadImages = true
